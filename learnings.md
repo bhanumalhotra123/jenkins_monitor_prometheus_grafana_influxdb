@@ -285,8 +285,9 @@ Overall Panel:
 
 Add new panel:
 
-Type: Pie CHart
+Type: Pie Chart (Donut)
 Data Source: InfluxDB  (all the pipeline data we are getting from influxdb)
+Title: Overall
 
 Queries:
 
@@ -321,6 +322,35 @@ SELECT count(build_number) FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$j
 SELECT count(build_number) FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND ("build_result" = 'UNSTABLE' OR "build_result" = 'Unstable' ) AND $timeFilter
 
 ![m105](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/8a90b927-90e4-425c-bf8c-59f7b1a39c63)
+
+
+For testing purpose: I  edited script of 1 job and put something random so it fails, aborted you can do by stopping any build in between , for unstable i used 
+
+pipeline {
+    agent any 
+    stages {
+        stage('Stage 1') {
+            steps {
+                script{
+                echo 'Hello world!'
+                currentBuild.result='Unstable'
+                }
+            }
+        }
+    }
+}
+
+
+I also created a table for it:
+Under Pie Chart > All > Legend  > Legend Mode > Table
+Under Pie Chart > All > Legend  > Legend Placement > Right
+Under Pie Chart > All > Legend  > Legend Values > Select Percent and Value
+
+Now for fixing colours >
+Under Pie Chart > Overrides>  Add field Override > Field with Name > Success > Add override property > Green colour
+Same for others.
+
+![m106](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/3ccafe42-3976-4a23-b947-d9620beb09e3)
 
 
 
