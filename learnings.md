@@ -211,3 +211,41 @@ In grafana > Configuration button(left side) > Add datasource:
 ![m9](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/b6138480-2c32-4c6e-9eec-95e897c54aa8)
 
 
+
+Now to create dashboard in grafana:
+On the left menu select + button > Create Dashboard 
+Now we can create as many panels as we want here:
+
+
+![m10](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/7c18e2ce-96a5-4139-8b4b-1731c889b7d1)
+
+
+1st Panel: Jenkins Health
+
+UP or DOWN
+
+To create a panel > Add new panel
+Select the data source: Prometheus
+Provide prometheus query (to get this we can search for up in prometheus queries and it will give us for targets jenkins and itself, pick the jenkins one)
+Select Type of Panel: Stat
+When we put the query in grafana, we get the value 1.
+Under Stat Panel > Value Mapping > Here Map 1 to UP and colour Green and 0 to DOWN and Red colour.
+Stat Panel > Stat Styles > Color mode > Background (we want the background colors not the color for value)
+
+2nd Panel:
+To create a panel > Add new panel
+Select the data source: Prometheus
+Provide prometheus query (In  prometheus queries: jenkins_executor_count_value, jenkins_node_count_value, jenkins_queue_size_value these will give you results which we can place in grafana)
+Select Type of Panel: Time Series
+
+![m101](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/84d4b41a-a19c-4e01-8185-21a2608ee8f1)
+
+
+To test this we added an agent name to one of the created jobs but that agent didn't exist. So the pipeline kept looking on for the agent and the job queue increased.
+
+![m102](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/229e71b6-7d62-4175-b4e1-ad0dd0cf832b)
+
+
+
+
+
