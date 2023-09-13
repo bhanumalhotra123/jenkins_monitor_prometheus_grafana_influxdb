@@ -233,9 +233,10 @@ Under Stat Panel > Value Mapping > Here Map 1 to UP and colour Green and 0 to DO
 Stat Panel > Stat Styles > Color mode > Background (we want the background colors not the color for value)
 
 2nd Panel:
-To create a panel > Add new panel
-Select the data source: Prometheus
-Provide prometheus query (In  prometheus queries: jenkins_executor_count_value, jenkins_node_count_value, jenkins_queue_size_value these will give you results which we can place in grafana)
+To create a panel > Add new panel.
+Select the data source: Prometheus.
+Provide prometheus query (In  prometheus queries: jenkins_executor_count_value, jenkins_node_count_value, jenkins_queue_size_value these will give you results
+which we can place in grafana).
 Select Type of Panel: Time Series
 
 ![m101](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/84d4b41a-a19c-4e01-8185-21a2608ee8f1)
