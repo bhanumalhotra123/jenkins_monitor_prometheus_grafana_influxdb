@@ -169,7 +169,7 @@ Now we have configured jenkins and prometheus
 also jenkins and influxDB
 
 Now?
-Let's create some data
+Let's create some data:
 
 
 Create folders and jobs within them:
@@ -180,13 +180,8 @@ call-booking-admin        admin-api,admin-ui
 
 In the end of each console-output of the job:
 
-[Pipeline] // node
-[Pipeline] End of Pipeline
-[InfluxDB Plugin] Collecting data...
-[InfluxDB plugin] Metrics plugin data found. Writing to InfluxDB...
-[InfluxDB Plugin] Publishing data to target 'InfluxDB' (url='http://34.202.233.172:8086', database='jenkins')
-[InfluxDB Plugin] Completed.
-Finished: SUCCESS
+![m7](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/f4734c0a-8e11-4c5f-b4f6-74022c1b501d)
+
 
 Sends the data to influxDB
 
