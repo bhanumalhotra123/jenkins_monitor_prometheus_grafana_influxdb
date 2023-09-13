@@ -52,7 +52,7 @@ scrape_configs:
  Additional configuration options may be added as needed.
 
 
-docker run -d --name prometheus-container -v /home/bhanu/prometheus.yml:/etc/prometheus/prometheus.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
+docker run -d --name prometheus-container -v /home/ubuntu/prometheus.yml:/etc/prometheus/prometheus.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
 
 
 2. Grafana
@@ -108,9 +108,10 @@ Install the following plugins:
 
 
 RESTART THE JENKINS
-http://34.202.233.172:8080/RESTART
+http://34.202.233.172:8080/restart
 
-docker restart jenkins
+docker restart jenkins-container-id
+
 
 To store the pipeline data:
 
@@ -123,11 +124,15 @@ RETENTION POLICY: jenkins-retention
 
 Test Connection: success!
 
-select
-job schedule time as timestamp 
+Select
+Job schedule time as timestamp 
 global listener(you can filter as well)
 
 
+![m5](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/5e331a06-b1c3-4ead-be4b-1668bc5658b5)
+
+
+![m6](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/4f91aad4-5ca6-4212-8483-4ec526e7465c)
 How much time each stage is taking? How much time each pipeline is taking?
 Dashboard > Manage Jenkins > Configure System > Autostatus Config > Send to InfluxDB
 
@@ -147,35 +152,9 @@ Prometheus can scrap the data from here anytime it wants.
 You don't have to do anything more for prometheus in jenkins
 But you have to setup jenkins in prometheus
 
-Now /home/bhanu/prometheus.yml
+Now /home/ubuntu/prometheus.yml
 
-
-root@ip-172-31-48-76:/home/bhanu# cat prometheus.yml
-global:
-  scrape_interval: 15s
-  evaluation_interval: 15s
-
-alerting: 
-  alertmanagers:
-  -   static_configs:
-      - targets: 
-        #['localhost:8080'] # Replace with the actual service address and port
-
-rule_files:
-  - 'alerts.yml'
-
-
-
-scrape_configs:
-  - job_name: 'prometheus'
-    static_configs:
-      - targets: ['localhost:9090'] # Prometheus itself
-
-  - job_name: 'jenkins'                                   #updated the location from where prometheus will scrap jenkins data.
-    metrics_path: '/prometheus'
-    static_configs:
-      - targets: ['34.202.233.172:8080'] # Prometheus itself   
-# Additional configuration options may be added as needed.
+![m4](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/4c8867c7-7949-47e9-94e5-eeba97ac7574)
 
 Restart Prometheus container
 docker restart id
