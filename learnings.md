@@ -180,7 +180,7 @@ call-booking-admin        admin-api,admin-ui
 
 In the end of each console-output of the job:
 
-![m7](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/f4734c0a-8e11-4c5f-b4f6-74022c1b501d)
+![m7](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/f6d3b97b-64df-474d-a26c-4779acf58f48)
 
 
 Sends the data to influxDB
