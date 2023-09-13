@@ -1,6 +1,8 @@
 Monitoring With Grafana | Monitoring Production grade Jenkins using Prometheus, Grafana & InfluxDB
 
-Created an EC2 instance.
+Created an EC2 instance and setup security group inbound rules.
+
+ssh into the machine
 
 
 Installed Docker:
@@ -50,29 +52,17 @@ scrape_configs:
 # Additional configuration options may be added as needed.
 
 
-
-
 docker run -d --name prometheus-container -v /home/bhanu/prometheus.yml:/etc/prometheus/prometheus.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
-Note:- For more info prometheus
+
 
 2. Grafana
 docker run -d --name=grafana -p 3000:3000 grafana/grafana:8.5.5
-Note:- For more info Grafana
+
 
 3. InfluxDb
 docker run -d -p 8086:8086 --name influxdb2 influxdb:1.8.6-alpine
 
-
-root@ip-172-31-48-76:/home/bhanu# docker ps
-CONTAINER ID   IMAGE                               COMMAND                  CREATED             STATUS             PORTS                                                  NAMES
-e4f572c20dbd   influxdb:1.8.6-alpine               "/entrypoint.sh infl…"   7 minutes ago       Up 7 minutes       0.0.0.0:8086->8086/tcp, :::8086->8086/tcp              influxdb2
-eefeddc2b88f   grafana/grafana:8.5.5               "/run.sh"                7 minutes ago       Up 7 minutes       0.0.0.0:3000->3000/tcp, :::3000->3000/tcp              grafana
-7b70d91f5cee   ubuntu/prometheus:2.33-22.04_beta   "/usr/bin/prometheus…"   9 minutes ago       Up 9 minutes       0.0.0.0:9090->9090/tcp, :::9090->9090/tcp              prometheus-container
-d076b2553ff9   jenkins/jenkins:lts-jdk11           "/usr/bin/tini -- /u…"   About an hour ago   Up About an hour   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 50000/tcp   quirky_hugle
-
-
-
-
+![m1](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/5a122e19-d43a-483a-afa2-59a2b3c8bad9)
 
 
 Jenkins UI:
@@ -92,31 +82,21 @@ set your own Password
 
 
 
-For fetching the data from jenkins to influxDB
-
-
+For fetching the data from jenkins to influxDB:
 
 Connect to container and execute below Influx Commands
 
-root@ip-172-31-48-76:/home/bhanu# docker exec -it e4f572c20dbd  bash
-bash-5.0# influx
-Connected to http://localhost:8086 version 1.8.6
-InfluxDB shell version: 1.8.6
-> SHOW DATABASES
-name: databases
-name
-----
-_internal
-> CREATE DATABASE "jenkins" WITH DURATION 1825d REPLICATION 1 NAME "jenkins-retention"
-> SHOW DATABASES
-name: databases
-name
-----
-_internal
-jenkins
-> USE jenkins
-Using database jenkins
-> 
+![m2](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/43db8dc6-6603-425f-bd4e-f4f6ff7c963f)
+
+
+CREATE DATABASE "jenkins" WITH DURATION 1825d REPLICATION 1 NAME "jenkins-retention"
+
+This command configures InfluxDB to establish a new database called "jenkins." Within this database, it defines a data retention policy that specifies a data retention period of 5 years. This retention policy essentially means that data older than 5 years will be automatically removed from the database to conserve storage space.
+
+Furthermore, the command sets the replication factor to "1," which means that there will be one copy of the data kept for redundancy and fault tolerance purposes.
+
+Lastly, it provides a name for this retention policy, which is "jenkins-retention." This naming convention is valuable for managing and categorizing different data retention policies within the database.
+
 
 
 Now go to jenkins dashboard:
