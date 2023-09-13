@@ -23,12 +23,14 @@ docker run -d -p 8080:8080 jenkins/jenkins:lts-jdk11
 
 To bring up monitoring stack using docker
 
-1. Prometheus
+Prometheus
 
-cd /home/bhanu
+cd /home/ubuntu
 
 vi prometheus.yml
+
 root@ip-172-31-48-76:/home/bhanu# cat prometheus.yml
+
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
@@ -41,8 +43,6 @@ alerting:
 
 rule_files:
   - 'alerts.yml'
-
-
 
 scrape_configs:
   - job_name: 'prometheus'
@@ -131,8 +131,8 @@ global listener(you can filter as well)
 
 ![m5](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/5e331a06-b1c3-4ead-be4b-1668bc5658b5)
 
+![m4](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/4c8867c7-7949-47e9-94e5-eeba97ac7574)
 
-![m6](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/4f91aad4-5ca6-4212-8483-4ec526e7465c)
 How much time each stage is taking? How much time each pipeline is taking?
 Dashboard > Manage Jenkins > Configure System > Autostatus Config > Send to InfluxDB
 
@@ -153,8 +153,8 @@ You don't have to do anything more for prometheus in jenkins
 But you have to setup jenkins in prometheus
 
 Now /home/ubuntu/prometheus.yml
+![m6](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/4f91aad4-5ca6-4212-8483-4ec526e7465c)
 
-![m4](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/4c8867c7-7949-47e9-94e5-eeba97ac7574)
 
 Restart Prometheus container
 docker restart id
