@@ -247,6 +247,36 @@ To test this we added an agent name to one of the created jobs but that agent di
 ![m102](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/229e71b6-7d62-4175-b4e1-ad0dd0cf832b)
 
 
+Creating Drop Downs in Grafana:
+Go to Dashboard Settings on top menu > Variables > Add Variable
 
+Name: Folder Label: folder DataSource: InfluxDB  
+
+
+Query: SHOW TAG VALUES FROM job WITH KEY = "owner"
+
+In InfluxDB, data is organized into "measurement" and "tag" sets. A "measurement" is like a table in a traditional database, and "tags" are key-value pairs associated with data points in that measurement. 
+
+SHOW TAG VALUES: This is a command in InfluxDB used to retrieve the unique values associated with tags in a measurement.
+
+FROM job: Here, "job" is the name of the measurement you want to work with. Think of it as the dataset you want to query.
+
+WITH KEY="owner": This part specifies that you want to focus on the tag with the key "owner" within the "job" measurement. Tags are metadata associated with data points, and in this case, you're interested in the "owner" tag specifically.
+
+So, the query is asking InfluxDB to show you all the unique values of the "owner" tag within the "job" measurement. It helps you understand who the different owners are for the data points in that measurement.
+
+
+Name: Job  Label: job  DataSource: InfluxDB 
+
+Query: SHOW TAG VALUES FROM job WITH KEY = repo WHERE "owner" =~ /^($folder)$/
+
+Here ~ /^($folder)$/ this part grafana will replace with whatever i select in Dropdown
+
+![m104](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/71edee93-64a7-43dc-8c9f-cd7616021d3f)
+
+
+![m103](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/f14a96b3-306c-4e23-bccf-683d42e2301a)
+
+Remember to select all include option
 
 
