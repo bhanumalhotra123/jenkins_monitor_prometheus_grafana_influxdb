@@ -1,4 +1,4 @@
-Monitoring With Grafana | Monitoring Production grade Jenkins using Prometheus, Grafana & InfluxDB
+# Monitoring With Grafana | Monitoring Production grade Jenkins using Prometheus, Grafana & InfluxDB
 
 Created an EC2 instance and setup security group inbound rules.
 
@@ -49,7 +49,7 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090'] # Prometheus itself
 
-# Additional configuration options may be added as needed.
+ Additional configuration options may be added as needed.
 
 
 docker run -d --name prometheus-container -v /home/bhanu/prometheus.yml:/etc/prometheus/prometheus.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
@@ -99,26 +99,13 @@ Lastly, it provides a name for this retention policy, which is "jenkins-retentio
 
 
 
+
 Now go to jenkins dashboard:
 
 Install the following plugins:
 
-InfluxDBVersion
-3.5
-Build Reports Other Post-Build Actions
-This plugin allows sending build results to InfluxDB. It was inspired by https://github.com/jrajala-eficode/jenkins-ci.influxdb-plugin
-2 mo 13 days ago
+![m3](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/06232e74-3d8a-4a1b-a9dc-81981a88399e)
 
-Job and Stage monitoringVersion
-3.6.2
-Watches pipeline jobs and provides job and stage stats such as time and pass/fail. Can be configured to update GitHub commit status (one status per stage) and send stats to an InfluxDB instance, or StatsD collector, for build health monitoring of job/stage timing and success rate.
-3 yr 6 mo ago
-
-
-Prometheus metricsVersion
-2.3.1
-monitoring Miscellaneous
-Jenkins Prometheus Plugin expose an endpoint (default /prometheus) with metrics where a Prometheus Server can scrape.
 
 RESTART THE JENKINS
 http://34.202.233.172:8080/RESTART
