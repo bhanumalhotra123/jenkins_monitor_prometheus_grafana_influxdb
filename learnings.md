@@ -178,10 +178,30 @@ Folder                    jobs
 call-booking-user         user-api,user-ui
 call-booking-admin        admin-api,admin-ui
 
+We can use hello world script for now:
+
+pipeline {
+    agent any // This means the pipeline can run on any available agent (slave/executor)
+
+    stages {
+        stage('Hello') {
+            steps {
+                // This is where you put your actual build or script steps
+                echo 'Hello, World!' // This will print "Hello, World!" to the console
+            }
+        }
+    }
+}
+
+
 In the end of each console-output of the job:
 
 ![m7](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/f6d3b97b-64df-474d-a26c-4779acf58f48)
 
+Sends the data to influxDB:
 
-Sends the data to influxDB
+![m8](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/f53585d7-c109-4a62-a350-e4f14519b9e1)
+
+
+
 
