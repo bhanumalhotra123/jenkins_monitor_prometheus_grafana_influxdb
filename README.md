@@ -1,5 +1,7 @@
 Monitoring With Grafana | Monitoring Production grade Jenkins using Prometheus, Grafana & InfluxDB
 
+(learnings.md have all the steps with images of implementing this.)
+
 ![m111](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/b7a79988-8cc0-4bb2-8fed-83b57162ed27)
 
 ![m112](https://github.com/bhanumalhotra123/jenkins_monitor_prometheus_grafana_influxdb/assets/144083659/bb51c387-8b42-4d1a-b681-fa2745b0892c)
