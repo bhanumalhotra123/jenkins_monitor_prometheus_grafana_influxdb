@@ -363,13 +363,65 @@ Can add colors based on threshold
   
 
 Panel: Total number of builds (Can duplicate the previous one and make changes to it) ,  
-Query: SELECT count(build_number) FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter .  
+Query: SELECT count(build_number) FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter   
 
 
 Panel: Average Build Time,  
 Type: Stat,  
 DataSource: InfluxDB,  
 Query:  
-select build_time/1000 FROM jenkins_data WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter 
+select build_time/1000 FROM jenkins_data WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter   
+Standard Options: > Unit > Clock(s)  
+
+Panel: Latest Build Status
+Type: Stat  
+Source: InfluxDB   
+Query: SELECT build_result FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter  ORDER BY time DESC LIMIT 1   
+Value Options: > Fields > jenkins.data_build_result  
+Stat Styles: > Color Mode > Background  
+Value Mapping: Added all the values with appropriate colors  
 
 
+
+Panel:  Started time, pipeline name(with link to jenkins), build number, Causer, Build time, Result [All of this in a table]
+Type: table
+Source: InfluxDB
+Query: 
+SELECT "build_exec_time","project_path","build_number","build_causer","build_time","build_result" FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter 
+
+We want all the values in the table in a single view for that : Transform > Outerjoin 
+
+![m107](https://github.com/bhanumalhotra123/aws-learnings/assets/144083659/7bfa97cb-1bc5-4250-b922-89fa62cf0381)
+
+Now this table have information about the time when the data was pushed to the influxDB we don't want that info. To remove: Override >Field with name > Time > Add override property > Hide in table
+Override > Field with name > jenkins_data.build_exec_time >Add property (Standard options > Display name) > Started Time  
+                                                                         (Standard options > Unit ) > Datetime ISO  
+We can change the display names like this for others too
+
+Now for pipeline path
+
+In override properties > Datalink 
+![m108](https://github.com/bhanumalhotra123/aws-learnings/assets/144083659/d8338f91-2afe-463c-baf8-5b3221b211be)
+
+ http://34.125.42.68:8080/job/${__data.fields["jenkins_data.project_path"]}﻿/${__data.fields["jenkins_data.build_number"]}
+
+Override property > Value Mapping
+regex /(\/)/g = /job$1
+            
+regex: This is indicating that a regular expression is being used.  
+
+/(/)/g: This is the regular expression pattern. It's enclosed in / characters. In regular expressions, / has a special meaning, so it needs to be escaped as \/. The pattern /(\/)/g is looking for all occurrences of / in a string.  
+
+/job$1: This is the replacement pattern. It's saying that for every match of / found in the string, replace it with /job$1.
+  
+/job: This is a string that will replace the matched /. So, every / will be replaced with /job.  
+  
+$1: This is a special reference to the first captured group in the regular expression pattern, which is the matched /. So, it's essentially saying "replace / with /job/."
+  
+Added colors using value mappings
+In tables > Cell display mode > Color Background(gradient)
+Standard Options > Color Scheme > Single Color (transparent)
+
+
+![m111](https://github.com/bhanumalhotra123/aws-learnings/assets/144083659/d3b17302-0ee8-43d3-b33d-dc01805c3309)
+![m112](https://github.com/bhanumalhotra123/aws-learnings/assets/144083659/919e1591-896b-42fe-a8f5-9c686e897338)
