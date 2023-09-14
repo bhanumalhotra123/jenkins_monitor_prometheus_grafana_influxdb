@@ -354,21 +354,21 @@ Same for others.
 
 
 
-Panel: No.of pipelines ran
-Source: InfluxDB
-Type: Stat
+Panel: No.of pipelines ran, 
+Source: InfluxDB,
+Type: Stat,
 Query: select count(DISTINCT project_name) FROM jenkins_data WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter 
 
 Can add colors based on threshold
 
 
-Panel: Total number of builds (Can duplicate the previous one and make changes to it) 
-Query: SELECT count(build_number) FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter 
+Panel: Total number of builds (Can duplicate the previous one and make changes to it) ,
+Query: SELECT count(build_number) FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter .
 
 
-Panel: Average Build Time
-Type: Stat
-DataSource: InfluxDB
+Panel: Average Build Time,
+Type: Stat,
+DataSource: InfluxDB,
 Query:
 select build_time/1000 FROM jenkins_data WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter 
 
